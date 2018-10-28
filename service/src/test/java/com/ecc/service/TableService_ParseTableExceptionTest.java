@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 import java.io.IOException;
 
-public class TableService_ParseTableTest {
+public class TableService_ParseTableExceptionTest {
 
 	@Test
 	public void whenTableFilePathDoesNotExistThenThrowIOException() throws IOException {
