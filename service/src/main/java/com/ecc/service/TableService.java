@@ -9,4 +9,6 @@ public interface TableService {
 
 	boolean isCellNull(int row, int col);
 	Optional<TableCell> getCell(int row, int col);
+	int getRowCount();
+	int getColCount();
 }

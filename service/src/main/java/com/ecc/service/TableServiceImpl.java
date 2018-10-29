@@ -45,6 +45,18 @@ public class TableServiceImpl implements TableService {
 		return rowCells.get(row).get(col);
 	}
 
+	public int getRowCount() {
+		return this.rowCells.size();
+	}
+
+	public int getColCount() {
+		if (getRowCount() == 0) {
+			return 0;
+		}
+
+		return this.rowCells.get(0).size();
+	}
+
 	private void parseTable() throws IOException {
 
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(tableFile));
@@ -94,13 +106,16 @@ public class TableServiceImpl implements TableService {
 			return Optional.empty();
 		}
 
-		String[] innerCellArray = unparsedCell.split(CELL_DELIMITER + Utility.EMPTY_STRING);
+		String[] cellArray = unparsedCell.split(CELL_DELIMITER + Utility.EMPTY_STRING);
 
-		if (innerCellArray.length == 1) {
-			return Optional.of(new TableCell(innerCellArray[0], Utility.EMPTY_STRING));
+		if (cellArray.length == 0) {
+			return Optional.of(new TableCell(Utility.EMPTY_STRING, Utility.EMPTY_STRING));
+		}
+		else if (cellArray.length == 1) {
+			return Optional.of(new TableCell(cellArray[0], Utility.EMPTY_STRING));
 		}
 		else {
-			return Optional.of(new TableCell(innerCellArray[0], innerCellArray[1]));
+			return Optional.of(new TableCell(cellArray[0], cellArray[1]));
 		}
 	}
 
