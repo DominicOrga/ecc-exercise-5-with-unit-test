@@ -35,7 +35,8 @@ public class TableService_ParseTableExceptionTest {
 		throws IOException, FileNotFoundException {	
 
 		Throwable thrown = catchThrowable(() -> {
-			Optional<String> resourcePath = Utility.getResourcePath("table_delimiter_count_per_row_are_not_equal.txt");
+			Optional<String> resourcePath = 
+				Utility.getResourcePath("table_delimiter_count_per_row_are_not_equal.txt");
 			TableService tableService = new TableServiceImpl(resourcePath.get());	
 		});
 
@@ -48,11 +49,26 @@ public class TableService_ParseTableExceptionTest {
 		throws IOException, FileNotFoundException {
 			
 		Throwable thrown = catchThrowable(() -> {
-            Optional<String> resourcePath = Utility.getResourcePath("cell_delimiter_per_row_is_more_than_one.txt");
+            Optional<String> resourcePath = 
+            	Utility.getResourcePath("cell_delimiter_per_row_is_more_than_one.txt");
             TableService tableService = new TableServiceImpl(resourcePath.get());		
 		});
 
 		assertThat(thrown).isInstanceOf(IOException.class)
 		                  .hasMessageMatching("Detected multiple cell delimiter in a single cell.");
+	}
+
+	@Test
+	public void whenNoCellDelimiterOnNonEmptyCellThenThrowIOException() 
+		throws IOException, FileNotFoundException {
+
+		Throwable thrown = catchThrowable(() -> {
+            Optional<String> resourcePath = 
+            	Utility.getResourcePath("no_cell_delimiter_on_non_empty_cell.txt");
+            TableService tableService = new TableServiceImpl(resourcePath.get());		
+		});
+
+		assertThat(thrown).isInstanceOf(IOException.class)
+						  .hasMessageMatching("Found non-empty cell with no cell delimiter.");
 	}
 }

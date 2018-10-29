@@ -31,15 +31,14 @@ public class TableServiceImpl implements TableService {
 
 		identifyTableDelimiterCountPerRow();
 		checkCellDelimiterCountPerCell();
+		checkNoCellDelimiterOnNonEmptyCell();
 	};
 
 	public boolean isCellNull(int row, int col) {
 		return true;
 	}
 
-	private void parseTable() throws IOException {
 
-	}
 
 	private void identifyTableDelimiterCountPerRow() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(tableFile));
@@ -68,14 +67,33 @@ public class TableServiceImpl implements TableService {
 		String strLine = Utility.EMPTY_STRING;
 
 		while ((strLine = reader.readLine()) != null) {
-			String[] strSplit = strLine.split(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING);
+			String[] cellStrings = strLine.split(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING);
 			
-			for (int i = 0, s = strSplit.length; i < s; i++) {
-				int delimiterCount = StringUtils.countMatches(strSplit[i], TableService.CELL_DELIMITER + Utility.EMPTY_STRING);
+			for (int i = 0, s = cellStrings.length; i < s; i++) {
+				int delimiterCount = StringUtils.countMatches(cellStrings[i], TableService.CELL_DELIMITER + Utility.EMPTY_STRING);
 				
 				if (delimiterCount > 1) {
 					reader.close();
 					throw new IOException("Detected multiple cell delimiter in a single cell.");
+				} 
+			}
+		}
+
+		reader.close();
+	}
+
+	private void checkNoCellDelimiterOnNonEmptyCell() throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(tableFile));
+
+		String strLine = Utility.EMPTY_STRING;
+
+		while ((strLine = reader.readLine()) != null) {
+			String[] cellStrings = strLine.split(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING);
+
+			for (int i = 0, s = cellStrings.length; i < s; i++) {
+				if (!cellStrings[i].isEmpty() && !cellStrings[i].contains(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)) {
+					reader.close();
+					throw new IOException("Found non-empty cell with no cell delimiter.");
 				} 
 			}
 		}
