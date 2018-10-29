@@ -3,8 +3,10 @@ package com.ecc.service;
 import static org.assertj.core.api.Assertions.*;
 
 import com.ecc.util.Utility;
+import com.ecc.model.TableCell;
 
 import org.junit.Test;
+import org.junit.Before;
 
 import java.util.Optional;
 import java.io.IOException;
@@ -12,15 +14,19 @@ import java.io.FileNotFoundException;
 
 public class TableService_ParseCellValueTest {
 	
-	@Test
-	public void whenNoCellDelimiterThenCellIsNull() throws IOException, FileNotFoundException {
-		Optional<String> resourcePath = 
-			Utility.getResourcePath("parse_cell_value_test.txt");
-		TableService tableService = new TableServiceImpl(resourcePath.get());	
+	TableService tableService;
 
-		boolean isNull1 = tableService.isCellNull(0, 0);
-		boolean isNull2 = tableService.isCellNull(1, 1);
-		boolean isNull3 = tableService.isCellNull(2, 1);
+	@Before
+	public void parseTable() throws IOException, FileNotFoundException {
+		Optional<String> resourcePath = Utility.getResourcePath("parse_cell_value_test.txt");
+		this.tableService = new TableServiceImpl(resourcePath.get());	
+	}
+
+	@Test
+	public void whenNoCellDelimiterThenValueIsNull() {
+		boolean isNull1 = this.tableService.isCellNull(0, 0);
+		boolean isNull2 = this.tableService.isCellNull(1, 1);
+		boolean isNull3 = this.tableService.isCellNull(2, 1);
 
 		assertThat(isNull1).isTrue();
 		assertThat(isNull2).isTrue();
@@ -28,32 +34,35 @@ public class TableService_ParseCellValueTest {
 	}
 
 	@Test
-	public void whenCellBothPartsAreEmptyThenBothPartsAreEmpty() {
+	public void whenCellBothPartsAreEmptyThenBothPartValuesAreEmpty() {
+		
+	}
+
+	@Test
+	public void whenCellBothPartsAreNotEmptyThenBothPartValuesAreNotEmpty() {
+		Optional<TableCell> cell = this.tableService.getCell(0, 1);
+
+		assertThat(cell.get().getLeftCell()).isEqualTo("bbb");
+		assertThat(cell.get().getRightCell()).isEqualTo("ccc");
+	}
+
+	@Test
+	public void whenCellLeftPartIsEmptyThenLeftPartValueIsEmpty() {
 
 	}
 
 	@Test
-	public void whenCellBothPartsAreNotEmptyThenBothPartsAreNotEmpty() {
+	public void whenOnlyCellLeftPartIsEmptyThenRightPartValueIsNotEmpty() {
 
 	}
 
 	@Test
-	public void whenCellLeftPartIsEmptyThenLeftPartIsEmpty() {
+	public void whenCellRightPartIsEmptyThenRightPartValueIsEmpty() {
 
 	}
 
 	@Test
-	public void whenOnlyCellLeftPartIsEmptyThenRightPartIsNotEmpty() {
-
-	}
-
-	@Test
-	public void whenCellRightPartIsEmptyThenRightPartIsEmpty() {
-
-	}
-
-	@Test
-	public void whenOnlyCellRightPartIsEmptyThenLeftPartIsNotEmpty() {
+	public void whenOnlyCellRightPartIsEmptyThenLeftPartValueIsNotEmpty() {
 
 	}
 }

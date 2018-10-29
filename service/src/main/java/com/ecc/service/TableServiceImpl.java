@@ -37,9 +37,12 @@ public class TableServiceImpl implements TableService {
 	};
 
 	public boolean isCellNull(int row, int col) {
-
 		Optional<TableCell> cell = rowCells.get(row).get(col);
 		return !cell.isPresent();
+	}
+
+	public Optional<TableCell> getCell(int row, int col) {
+		return rowCells.get(row).get(col);
 	}
 
 	private void parseTable() throws IOException {
