@@ -1,0 +1,5 @@
+aaa,aaa/bb,bb/cc,/dd,ddd/eee,/
+,fff/ggg,gg//hhh,/,iii/jjj,jjjj
+//kkk,mmm/nnn,oo/ppp,/qqq,qqq
+,rrrr/,sss/ttt,uu/vvv,www/aaa,bbb/ccc,
+ddd,fff//hhh,eee/rrr,ttt/p,/

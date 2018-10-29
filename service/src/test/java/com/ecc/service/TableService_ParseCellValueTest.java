@@ -18,19 +18,14 @@ public class TableService_ParseCellValueTest {
 
 	@Before
 	public void parseTable() throws IOException, FileNotFoundException {
-		Optional<String> resourcePath = Utility.getResourcePath("parse_cell_value_test.txt");
+		Optional<String> resourcePath = Utility.getResourcePath("mock_table.txt");
 		this.tableService = new TableServiceImpl(resourcePath.get());	
 	}
 
 	@Test
 	public void whenNoCellDelimiterThenValueIsNull() {
-		boolean isNull1 = this.tableService.isCellNull(0, 0);
-		boolean isNull2 = this.tableService.isCellNull(1, 1);
-		boolean isNull3 = this.tableService.isCellNull(2, 1);
-
-		assertThat(isNull1).isTrue();
-		assertThat(isNull2).isTrue();
-		assertThat(isNull3).isTrue();
+		boolean isNull = this.tableService.isCellNull(0, 5);
+		assertThat(isNull).isTrue();
 	}
 
 	@Test
@@ -40,10 +35,9 @@ public class TableService_ParseCellValueTest {
 
 	@Test
 	public void whenCellBothPartsAreNotEmptyThenBothPartValuesAreNotEmpty() {
-		Optional<TableCell> cell = this.tableService.getCell(0, 1);
-
-		assertThat(cell.get().getLeftCell()).isEqualTo("bbb");
-		assertThat(cell.get().getRightCell()).isEqualTo("ccc");
+		Optional<TableCell> cell = this.tableService.getCell(0, 0);
+		assertThat(cell.get().getLeftCell()).isEqualTo("aaa");
+		assertThat(cell.get().getRightCell()).isEqualTo("aaa");
 	}
 
 	@Test
