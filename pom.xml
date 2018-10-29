@@ -19,6 +19,7 @@
   <modules>
     <module>service</module>
     <module>util</module>
+    <module>model</module>
   </modules>
 
   <dependencies>
