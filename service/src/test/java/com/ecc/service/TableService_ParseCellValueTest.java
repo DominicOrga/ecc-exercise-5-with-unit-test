@@ -30,12 +30,16 @@ public class TableService_ParseCellValueTest {
 
 	@Test
 	public void whenCellBothPartsAreEmptyThenBothPartValuesAreEmpty() {
-		
+		Optional<TableCell> cell = this.tableService.getCell(2, 5);
+
+		assertThat(cell.get().getLeftCell()).isEmpty();
+		assertThat(cell.get().getRightCell()).isEmpty();
 	}
 
 	@Test
 	public void whenCellBothPartsAreNotEmptyThenBothPartValuesAreNotEmpty() {
 		Optional<TableCell> cell = this.tableService.getCell(0, 0);
+		
 		assertThat(cell.get().getLeftCell()).isEqualTo("aaa");
 		assertThat(cell.get().getRightCell()).isEqualTo("aaa");
 	}
