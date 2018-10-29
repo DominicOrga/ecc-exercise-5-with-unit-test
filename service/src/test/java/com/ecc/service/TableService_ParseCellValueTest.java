@@ -15,12 +15,16 @@ public class TableService_ParseCellValueTest {
 	@Test
 	public void whenNoCellDelimiterThenCellIsNull() throws IOException, FileNotFoundException {
 		Optional<String> resourcePath = 
-			Utility.getResourcePath("table_service_parse_cell_value_test.txt");
+			Utility.getResourcePath("parse_cell_value_test.txt");
 		TableService tableService = new TableServiceImpl(resourcePath.get());	
 
-		boolean isNull = tableService.isCellNull(0, 0);
+		boolean isNull1 = tableService.isCellNull(0, 0);
+		boolean isNull2 = tableService.isCellNull(1, 1);
+		boolean isNull3 = tableService.isCellNull(2, 1);
 
-		assertThat(isNull).isTrue();
+		assertThat(isNull1).isTrue();
+		assertThat(isNull2).isTrue();
+		assertThat(isNull3).isTrue();
 	}
 
 	@Test
