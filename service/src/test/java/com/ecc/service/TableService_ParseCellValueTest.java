@@ -55,6 +55,9 @@ public class TableService_ParseCellValueTest {
 
 	@Test
 	public void whenOnlyCellRightPartIsEmptyThenLeftPartValueIsNotEmpty() {
+		Optional<TableCell> cell = this.tableService.getCell(0, 4);
 
+		assertThat(cell.get().getLeftCell()).isEqualTo("eee");
+		assertThat(cell.get().getRightCell()).isEmpty();
 	}
 }
