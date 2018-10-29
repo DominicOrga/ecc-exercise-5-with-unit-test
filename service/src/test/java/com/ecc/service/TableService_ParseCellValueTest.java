@@ -25,6 +25,7 @@ public class TableService_ParseCellValueTest {
 	@Test
 	public void whenNoCellDelimiterThenValueIsNull() {
 		boolean isNull = this.tableService.isCellNull(0, 5);
+
 		assertThat(isNull).isTrue();
 	}
 
@@ -39,24 +40,17 @@ public class TableService_ParseCellValueTest {
 	@Test
 	public void whenCellBothPartsAreNotEmptyThenBothPartValuesAreNotEmpty() {
 		Optional<TableCell> cell = this.tableService.getCell(0, 0);
-		
+
 		assertThat(cell.get().getLeftCell()).isEqualTo("aaa");
 		assertThat(cell.get().getRightCell()).isEqualTo("aaa");
 	}
 
 	@Test
-	public void whenCellLeftPartIsEmptyThenLeftPartValueIsEmpty() {
-
-	}
-
-	@Test
 	public void whenOnlyCellLeftPartIsEmptyThenRightPartValueIsNotEmpty() {
+		Optional<TableCell> cell = this.tableService.getCell(1, 0);
 
-	}
-
-	@Test
-	public void whenCellRightPartIsEmptyThenRightPartValueIsEmpty() {
-
+		assertThat(cell.get().getLeftCell()).isEmpty();
+		assertThat(cell.get().getRightCell()).isEqualTo("fff");
 	}
 
 	@Test
