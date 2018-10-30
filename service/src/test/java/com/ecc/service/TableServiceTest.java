@@ -15,14 +15,13 @@ import java.io.FileNotFoundException;
 public class TableServiceTest {
 
 	@Test
-	public void whenGetTableAsStringThenNullValuesAreNULL() 
+	public void givenANullTableWhenGetTableAsStringThenValuesAreNULL() 
 		throws IOException, FileNotFoundException {
 		
 		Optional<String> resourcePath = Utility.getResourcePath("pure_null_table.txt");
 		TableService tableService = new TableServiceImpl(resourcePath.get());
 
 		String tableString = tableService.getTableAsString();
-
 		String expectedValue = "NULL/NULL/NULL/NULL\n" +
 							   "NULL/NULL/NULL/NULL\n" +
 							   "NULL/NULL/NULL/NULL";
@@ -31,9 +30,27 @@ public class TableServiceTest {
 	}
 
 	@Test
-	@Ignore
-	public void whenGetTableAsStringThenNonNullValuesArePersisted() 
+	public void givenANonNullTableWhenGetTableAsStringThenValuesArePersisted() 
 		throws IOException, FileNotFoundException {
-			
+
+		Optional<String> resourcePath = Utility.getResourcePath("non_null_table.txt");
+		TableService tableService = new TableServiceImpl(resourcePath.get());
+
+		String tableString = tableService.getTableAsString();
+		String expectedValue = "a,a/aa,aa/aaa,aaa\n" +
+							   "b,b/bb,bb/bbb,bbb\n" +
+							   "c,c/cc,cc/ccc,ccc";
+
+		assertThat(tableString).isEqualTo(expectedValue);
 	}
+
+	@Test
+	@Ignore
+	public void givenAnEmptyFileWhenGetRowCountThenReturnOne() {}
+
+	@Test
+	@Ignore
+	public void givenAnEmptyFileWhenGetColCountThenReturnOne() {}
+
+
 }
