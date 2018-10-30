@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,12 +65,12 @@ public class TableServiceImpl implements TableService {
 	}
 
 	public String getTableAsString() {
-		return rowCells.stream().map(
-			(columnCells) ->
-				columnCells.stream()
-				           .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : "NULL")
-                           .collect(Collectors.joining(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)))
-		.collect(Collectors.joining("\n"));
+		return rowCells.stream()
+					   .map((columnCells) ->
+					       columnCells.stream()
+									  .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : "NULL")
+									  .collect(Collectors.joining(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)))
+					   .collect(Collectors.joining("\n"));
 	}
 
 	public List<TableSearch> search(String searchString) {
@@ -103,8 +104,30 @@ public class TableServiceImpl implements TableService {
 	}
 
 	public void editCell(int row, int col, boolean isLeftCell, String newString) {
-		if (newString.contains(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)) {
+		if (newString.contains(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING) || 
+			newString.contains(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)) {
+			
 			return;
+		}
+
+		persistTable();
+	}
+
+	private void persistTable() {
+		try (FileWriter writer = new FileWriter(this.tableFile)) {
+			String tableString = 
+				rowCells.stream()
+				        .map((columnCells) ->
+							     columnCells.stream()
+										    .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : "NULL")
+						                    .collect(Collectors.joining(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)))
+		                .collect(Collectors.joining("\n"));
+
+			writer.write(tableString);
+			writer.flush();
+
+		} catch (IOException e) {
+			System.out.println("Data persistence failed.");
 		}
 	}
 

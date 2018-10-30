@@ -127,8 +127,16 @@ public class TableServiceTest {
 	}
 
 	@Test
-	@Ignore
-	public void givenAStringWithACellDelimiterWhenEditCellThenDoNothing() {
+	public void givenAStringWithACellDelimiterWhenEditCellThenDoNothing() 
+		throws IOException, FileNotFoundException {
 
+		Optional<String> resourcePath = Utility.getResourcePath("edit_cell_test_table.txt");
+		TableService tableService = new TableServiceImpl(resourcePath.get());
+
+		tableService.editCell(0, 0, true, "ab,cde");
+		tableService = new TableServiceImpl(resourcePath.get());
+		Optional<TableCell> cell = tableService.getCell(0, 0);
+
+		assertThat(cell.get().getLeftCell()).isEqualTo("a");			
 	}
 }
