@@ -120,9 +120,9 @@ public class TableServiceTest {
 		TableService tableService = new TableServiceImpl(resourcePath.get());
 
 		tableService.editCell(0, 0, true, "abcde/");
+
 		tableService = new TableServiceImpl(resourcePath.get());
 		Optional<TableCell> cell = tableService.getCell(0, 0);
-
 		assertThat(cell.get().getLeftCell()).isEqualTo("a");
 	}
 
@@ -134,9 +134,23 @@ public class TableServiceTest {
 		TableService tableService = new TableServiceImpl(resourcePath.get());
 
 		tableService.editCell(0, 0, true, "ab,cde");
+
 		tableService = new TableServiceImpl(resourcePath.get());
 		Optional<TableCell> cell = tableService.getCell(0, 0);
-
 		assertThat(cell.get().getLeftCell()).isEqualTo("a");			
+	}
+
+	@Test
+	public void givenValidStringWhenEditCellThenUpdateValueAndPersist() 
+		throws IOException, FileNotFoundException {
+
+		Optional<String> resourcePath = Utility.getResourcePath("edit_cell_test_table.txt");
+		TableService tableService = new TableServiceImpl(resourcePath.get());
+
+		tableService.editCell(0, 1, true, "abcde");
+
+		tableService = new TableServiceImpl(resourcePath.get());
+		Optional<TableCell> cell = tableService.getCell(0, 1);
+		assertThat(cell.get().getLeftCell()).isEqualTo("abcde");
 	}
 }

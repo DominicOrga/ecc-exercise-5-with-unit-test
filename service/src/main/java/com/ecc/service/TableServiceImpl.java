@@ -103,11 +103,22 @@ public class TableServiceImpl implements TableService {
 		return tableSearches;
 	}
 
-	public void editCell(int row, int col, boolean isLeftCell, String newString) {
+	public void editCell(int row, int col, boolean isLeftPart, String newString) {
 		if (newString.contains(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING) || 
 			newString.contains(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)) {
 			
 			return;
+		}
+
+		Optional<TableCell> cell = this.rowCells.get(row).get(col);
+
+		if (cell.isPresent()) {
+			if (isLeftPart) {
+				cell.get().setLeftCell(newString);
+			}
+			else {
+				cell.get().setRightCell(newString);
+			}
 		}
 
 		persistTable();
@@ -125,6 +136,7 @@ public class TableServiceImpl implements TableService {
 
 			writer.write(tableString);
 			writer.flush();
+			writer.close();
 
 		} catch (IOException e) {
 			System.out.println("Data persistence failed.");
