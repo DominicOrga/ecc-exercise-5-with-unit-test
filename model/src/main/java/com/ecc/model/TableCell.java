@@ -25,9 +25,8 @@ public class TableCell implements Comparable<TableCell> {
 			return this.rightCell;
 		}
 
-		@Override
-		public String toString() {
-			return leftCell + "," + rightCell;
+		public String toString(String delimiter) {
+			return leftCell + delimiter + rightCell;
 		}
 
 		@Override

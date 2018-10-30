@@ -73,7 +73,8 @@ public class TableServiceImpl implements TableService {
 		return rowCells.stream()
 					   .map((columnCells) ->
 					       columnCells.stream()
-									  .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : "NULL")
+									  .map((optionalCell) -> optionalCell.isPresent() ? 
+									      optionalCell.get().toString(TableService.CELL_DELIMITER + Utility.EMPTY_STRING) : "NULL")
 									  .collect(Collectors.joining(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)))
 					   .collect(Collectors.joining("\n"));
 	}
@@ -160,7 +161,8 @@ public class TableServiceImpl implements TableService {
 				rowCells.stream()
 				        .map((columnCells) ->
 							     columnCells.stream()
-										    .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : Utility.EMPTY_STRING)
+										    .map((optionalCell) -> optionalCell.isPresent() ? 
+										        optionalCell.get().toString(TableService.CELL_DELIMITER + Utility.EMPTY_STRING) : Utility.EMPTY_STRING)
 						                    .collect(Collectors.joining(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)))
 		                .collect(Collectors.joining("\n"));
 
