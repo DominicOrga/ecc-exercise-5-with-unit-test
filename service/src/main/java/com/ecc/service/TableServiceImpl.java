@@ -130,7 +130,7 @@ public class TableServiceImpl implements TableService {
 				rowCells.stream()
 				        .map((columnCells) ->
 							     columnCells.stream()
-										    .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : "NULL")
+										    .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : Utility.EMPTY_STRING)
 						                    .collect(Collectors.joining(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)))
 		                .collect(Collectors.joining("\n"));
 
@@ -256,7 +256,6 @@ public class TableServiceImpl implements TableService {
 			String[] cellStrings = strLine.split(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING);
 
 			for (int i = 0, s = cellStrings.length; i < s; i++) {
-				if (!cellStrings[i].isEmpty() && !cellStrings[i].contains(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)) {
 					reader.close();
 					throw new IOException("Found non-empty cell with no cell delimiter.");
 				} 
