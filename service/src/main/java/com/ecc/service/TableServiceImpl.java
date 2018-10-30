@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -125,6 +126,30 @@ public class TableServiceImpl implements TableService {
 				cell.get().setRightCell(newString);
 			}
 		}
+
+		persistTable();
+	}
+
+	public void addRow() {
+		List<Optional<TableCell>> columnCells = new ArrayList<>();
+
+		for (int j = 0, s = getColCount(); j < s; j++) {
+			columnCells.add((j == 0) ? 
+				Optional.of(new TableCell(generateRandomString(), generateRandomString())) : 
+				Optional.empty());
+		}
+
+		this.rowCells.add(columnCells);
+
+		persistTable();
+	}
+
+	public void addCell(int row, int col, String leftString, String rightString) {
+		if (isCellOutOfBounds(row, col) || !isCellNull(row, col)) {
+			return;
+		}
+
+		this.rowCells.get(row).set(col, Optional.of(new TableCell(leftString, rightString)));
 
 		persistTable();
 	}
@@ -272,5 +297,28 @@ public class TableServiceImpl implements TableService {
 		}
 
 		reader.close();
+	}
+
+	private String generateRandomString() {
+		StringBuilder sb = new StringBuilder();
+
+		Random rnd = new Random();
+
+		for (int i = 0; i < 5; i++) {
+
+			int ascii = -1;
+
+			do {
+				// ascii character between 0 ~ 31 represent symbols not found in the keyboard. Also, 
+				// 127 ascii is an empty character. Hence, allowed ascii range is between 32 ~ 126 
+				// only.
+				ascii = rnd.nextInt(127 - 32) + 32; 
+			} while (ascii == TABLE_DELIMITER || ascii == CELL_DELIMITER);
+			
+
+			sb.append((char) ascii);	
+		}
+
+		return sb.toString();
 	}
 }

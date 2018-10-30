@@ -17,4 +17,6 @@ public interface TableService {
 	String getTableAsString();
 	List<TableSearch> search(String searchString);
 	void editCell(int row, int col, boolean isLeftPart, String newString);
+	void addRow();
+	void addCell(int row, int col, String leftString, String rightString);
 }

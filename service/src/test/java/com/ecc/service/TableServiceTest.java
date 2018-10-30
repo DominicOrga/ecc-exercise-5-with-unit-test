@@ -9,9 +9,11 @@ import com.ecc.model.TableSearch;
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.Ignore;
+import org.apache.commons.io.FileUtils;
 
 import java.util.Optional;
 import java.util.List;
+import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -110,5 +112,5 @@ public class TableServiceTest {
 		assertThat(testCase2.getCol()).isEqualTo(2);
 		assertThat(testCase2.isLeftPart()).isFalse();
 		assertThat(testCase2.getMatchCount()).isEqualTo(2);		
-	}	
+	}
 }

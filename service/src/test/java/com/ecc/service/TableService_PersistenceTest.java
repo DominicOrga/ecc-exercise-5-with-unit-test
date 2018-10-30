@@ -74,6 +74,61 @@ public class TableService_PersistenceTest {
 		assertThat(cell.isPresent()).isFalse();
 	}
 
+	@Test
+	public void whenAddRowThenAddRowWithValueOnFirstColOnly() 
+		throws IOException, FileNotFoundException {
+
+		int rowCount = this.tableService.getRowCount();
+		this.tableService.addRow();
+
+		this.tableService = new TableServiceImpl(this.resourcePath.get());
+
+		int newRowCount = this.tableService.getRowCount();
+
+		assertThat(newRowCount).isEqualTo(rowCount + 1);
+		assertThat(this.tableService.isCellNull(rowCount, 0)).isFalse();
+		assertThat(this.tableService.isCellNull(rowCount, 1)).isTrue();
+		assertThat(this.tableService.isCellNull(rowCount, 2)).isTrue();
+	}
+
+	@Test
+	public void givenANullCellWhenAddCellThenAdd()
+		throws IOException, FileNotFoundException {
+
+		this.tableService.addCell(2, 1, "leftString", "rightString");
+
+		this.tableService = new TableServiceImpl(this.resourcePath.get());
+
+		assertThat(this.tableService.isCellNull(2, 1)).isFalse();
+	}
+
+	@Test
+	public void givenANonNullCellWhenAddCellTheDoNothing() 
+		throws IOException, FileNotFoundException {
+
+		this.tableService.addCell(0, 0, "leftString", "rightString");
+
+		this.tableService = new TableServiceImpl(this.resourcePath.get());
+		Optional<TableCell> cell = this.tableService.getCell(0, 0);
+ 	
+		assertThat(cell.get().getLeftCell()).isNotEqualTo("leftString");
+		assertThat(cell.get().getRightCell()).isNotEqualTo("rightString");
+	}
+
+	@Test
+	public void sortRowCellsAscending() 
+		throws IOException, FileNotFoundException {
+
+			this.tableService.sortRow(0, true);
+
+	}
+
+	@Test
+	@Ignore
+	public void sortRowCellsDescending() {
+
+	}
+
 	@After
 	public void RestoreTable() throws IOException {
 		FileUtils.writeStringToFile(new File(this.resourcePath.get()), fileCache);		
