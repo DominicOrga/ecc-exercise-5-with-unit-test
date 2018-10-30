@@ -45,12 +45,18 @@ public class TableServiceTest {
 	}
 
 	@Test
-	@Ignore
-	public void givenAnEmptyFileWhenGetRowCountThenReturnOne() {}
+	public void givenAnEmptyFileWhenGetRowCountThenReturnOne() 
+		throws IOException, FileNotFoundException {
+
+		Optional<String> resourcePath = Utility.getResourcePath("empty_file.txt");
+		TableService tableService = new TableServiceImpl(resourcePath.get());
+
+		int rowCount = tableService.getRowCount();
+
+		assertThat(rowCount).isEqualTo(1);
+	}
 
 	@Test
 	@Ignore
 	public void givenAnEmptyFileWhenGetColCountThenReturnOne() {}
-
-
 }
