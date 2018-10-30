@@ -7,20 +7,25 @@ import com.ecc.model.TableCell;
 
 import org.junit.Test;
 import org.junit.Before;
+import org.junit.After;
 import org.junit.Ignore;
+import org.apache.commons.io.FileUtils;
 
 import java.util.Optional;
+import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class TableService_EditCellTest {
 
+	String fileCache;
 	Optional<String> resourcePath;
 	TableService tableService;
 
 	@Before
 	public void setupTableService() throws IOException, FileNotFoundException {
 		this.resourcePath = Utility.getResourcePath("edit_cell_test_table.txt");
+		this.fileCache = FileUtils.readFileToString(new File(this.resourcePath.get()), "UTF-8");
 		this.tableService = new TableServiceImpl(this.resourcePath.get());
 	}
 
@@ -67,5 +72,10 @@ public class TableService_EditCellTest {
 		Optional<TableCell> cell = this.tableService.getCell(2, 1);
 
 		assertThat(cell.isPresent()).isFalse();
+	}
+
+	@After
+	public void RestoreTable() throws IOException {
+		FileUtils.writeStringToFile(new File(this.resourcePath.get()), fileCache);		
 	}
 }
