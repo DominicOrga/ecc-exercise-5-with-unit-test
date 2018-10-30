@@ -9,6 +9,7 @@ public interface TableService {
 	char TABLE_DELIMITER = '/';
 	char CELL_DELIMITER = ',';
 
+	boolean isCellOutOfBounds(int row, int col);
 	boolean isCellNull(int row, int col);
 	Optional<TableCell> getCell(int row, int col);
 	int getRowCount();

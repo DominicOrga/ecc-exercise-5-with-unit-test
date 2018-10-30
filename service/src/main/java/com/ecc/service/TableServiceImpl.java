@@ -39,13 +39,17 @@ public class TableServiceImpl implements TableService {
 		parseTable();
 	};
 
+	public boolean isCellOutOfBounds(int row, int col) {
+		return row < 0 || col < 0 || row >= getRowCount() || col >= getColCount();
+	}
+
 	public boolean isCellNull(int row, int col) {
 		Optional<TableCell> cell = rowCells.get(row).get(col);
 		return !cell.isPresent();
 	}
 
 	public Optional<TableCell> getCell(int row, int col) {
-		if (row < 0 || col < 0 || row >= getRowCount() || col >= getColCount()) {
+		if (isCellOutOfBounds(row, col)) {
 			return Optional.empty();
 		}
 
@@ -105,7 +109,8 @@ public class TableServiceImpl implements TableService {
 
 	public void editCell(int row, int col, boolean isLeftPart, String newString) {
 		if (newString.contains(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING) || 
-			newString.contains(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)) {
+			newString.contains(TableService.CELL_DELIMITER + Utility.EMPTY_STRING) || 
+			isCellOutOfBounds(row, col)) {
 			
 			return;
 		}
