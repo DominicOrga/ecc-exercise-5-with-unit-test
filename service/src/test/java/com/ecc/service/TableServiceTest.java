@@ -153,4 +153,19 @@ public class TableServiceTest {
 		Optional<TableCell> cell = tableService.getCell(0, 1);
 		assertThat(cell.get().getLeftCell()).isEqualTo("abcde");
 	}
+
+	@Test
+	public void givenANullCellWhenEditCellThenDoNothing() 
+		throws IOException, FileNotFoundException {
+
+		Optional<String> resourcePath = Utility.getResourcePath("edit_cell_test_table.txt");
+		TableService tableService = new TableServiceImpl(resourcePath.get());
+
+		tableService.editCell(2, 1, true, "abcde");
+
+		tableService = new TableServiceImpl(resourcePath.get());
+		Optional<TableCell> cell = tableService.getCell(2, 1);
+
+		assertThat(cell.isPresent()).isFalse();
+	}
 }

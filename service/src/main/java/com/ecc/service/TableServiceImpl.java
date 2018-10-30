@@ -256,6 +256,10 @@ public class TableServiceImpl implements TableService {
 			String[] cellStrings = strLine.split(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING);
 
 			for (int i = 0, s = cellStrings.length; i < s; i++) {
+				if (cellStrings[i] != null && 
+					!cellStrings[i].isEmpty() && 
+					!cellStrings[i].contains(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)) {
+					
 					reader.close();
 					throw new IOException("Found non-empty cell with no cell delimiter.");
 				} 
