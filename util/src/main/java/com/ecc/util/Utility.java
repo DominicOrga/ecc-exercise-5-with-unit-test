@@ -28,24 +28,24 @@ public class Utility {
 		return resourcePath;
 	}
 
-	// public static int countOccurrence(String str, String substr) {
+	public static int countOccurrence(String str, String substr) {
 
-	// 	int count = 0;
-	// 	int s = str.length() - substr.length();
+		int count = 0;
+		int s = str.length() - substr.length();
 
-	// 	// substr length is longer than the string to be searched. Hence, return 0.
-	// 	if (s < 0) {
-	// 		return count;
-	// 	}
+		// substr length is longer than the string to be searched. Hence, return 0.
+		if (s < 0) {
+			return count;
+		}
 
-	// 	for (int k = 0; k <= s; k++) {
-	// 		if (str.substring(k, k + substr.length()).equals(substr)) {
-	// 			count++;
-	// 		}
-	// 	}
+		for (int k = 0; k <= s; k++) {
+			if (str.substring(k, k + substr.length()).equals(substr)) {
+				count++;
+			}
+		}
 
-	// 	return count;
-	// }
+		return count;
+	}
 
 	// public static String getStringInput(String message, String... invalidSubstrings) {
 	// 	Scanner scanner = new Scanner(System.in);

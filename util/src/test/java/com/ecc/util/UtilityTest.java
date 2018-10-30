@@ -19,4 +19,10 @@ public class UtilityTest {
 		Optional<String> path = Utility.getResourcePath("non-existing-file.txt");
 		assertThat(path.isPresent()).isFalse();
 	}
+
+	@Test
+	public void givenASearchStringThenCountOccurrence() {
+		int count = Utility.countOccurrence("aaaa", "aa");
+		assertThat(count).isEqualTo(3);
+	}
 }
