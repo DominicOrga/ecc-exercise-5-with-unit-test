@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -55,6 +56,15 @@ public class TableServiceImpl implements TableService {
 		}
 
 		return this.rowCells.get(0).size();
+	}
+
+	public String getTableAsString() {
+		return rowCells.stream().map(
+			(columnCells) ->
+				columnCells.stream()
+				           .map((optionalCell) -> optionalCell.isPresent() ? optionalCell.get().toString() : "NULL")
+                           .collect(Collectors.joining(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)))
+		.collect(Collectors.joining("\n"));
 	}
 
 	private void parseTable() throws IOException {

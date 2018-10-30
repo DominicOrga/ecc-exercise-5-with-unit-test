@@ -17,7 +17,7 @@ public class TableService_ParseCellValueTest {
 	TableService tableService;
 
 	@Before
-	public void parseTable() throws IOException, FileNotFoundException {
+	public void setupTableService() throws IOException, FileNotFoundException {
 		Optional<String> resourcePath = Utility.getResourcePath("mock_table.txt");
 		this.tableService = new TableServiceImpl(resourcePath.get());	
 	}

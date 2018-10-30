@@ -11,4 +11,5 @@ public interface TableService {
 	Optional<TableCell> getCell(int row, int col);
 	int getRowCount();
 	int getColCount();
+	String getTableAsString();
 }
