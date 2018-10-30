@@ -43,6 +43,10 @@ public class TableServiceImpl implements TableService {
 	}
 
 	public Optional<TableCell> getCell(int row, int col) {
+		if (row < 0 || col < 0 || row >= getRowCount() || col >= getColCount()) {
+			return Optional.empty();
+		}
+
 		return rowCells.get(row).get(col);
 	}
 
