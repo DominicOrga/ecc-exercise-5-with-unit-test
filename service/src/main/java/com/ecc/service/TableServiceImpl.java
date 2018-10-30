@@ -102,6 +102,11 @@ public class TableServiceImpl implements TableService {
 		return tableSearches;
 	}
 
+	public void editCell(int row, int col, boolean isLeftCell, String newString) {
+		if (newString.contains(TableService.TABLE_DELIMITER + Utility.EMPTY_STRING)) {
+			return;
+		}
+	}
 
 	private void parseTable() throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(tableFile));
