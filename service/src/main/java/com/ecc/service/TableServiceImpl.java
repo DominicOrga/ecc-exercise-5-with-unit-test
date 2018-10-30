@@ -2,6 +2,7 @@ package com.ecc.service;
 
 import com.ecc.util.Utility;
 import com.ecc.model.TableCell;
+import com.ecc.model.TableSearch;
 
 import java.io.IOException;
 import java.io.FileNotFoundException;
@@ -71,8 +72,38 @@ public class TableServiceImpl implements TableService {
 		.collect(Collectors.joining("\n"));
 	}
 
-	private void parseTable() throws IOException {
+	public List<TableSearch> search(String searchString) {
+		List<TableSearch> tableSearches = new ArrayList<>();
 
+		for (int i = 0, s = getRowCount(); i < s; i++) {
+			for (int j = 0, t = getColCount(); j < t; j++) {
+				Optional<TableCell> cell = rowCells.get(i).get(j);
+
+				if (!cell.isPresent()) {
+					continue;
+				}
+
+				int leftPartCount = Utility.countOccurrence(cell.get().getLeftCell(), searchString);
+
+				if (leftPartCount > 0) {
+					TableSearch tableSearch = new TableSearch(i, j, true, leftPartCount);
+					tableSearches.add(tableSearch);
+				}
+
+				int rightPartCount = Utility.countOccurrence(cell.get().getRightCell(), searchString);
+
+				if (rightPartCount > 0) {
+					TableSearch tableSearch = new TableSearch(i, j, false, rightPartCount);
+					tableSearches.add(tableSearch);
+				}
+			}
+		}
+
+		return tableSearches;
+	}
+
+
+	private void parseTable() throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(tableFile));
 		rowCells = new ArrayList<>();
 

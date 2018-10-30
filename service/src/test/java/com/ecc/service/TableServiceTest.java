@@ -4,12 +4,14 @@ import static org.assertj.core.api.Assertions.*;
 
 import com.ecc.util.Utility;
 import com.ecc.model.TableCell;
+import com.ecc.model.TableSearch;
 
 import org.junit.Test;
 import org.junit.Before;
 import org.junit.Ignore;
 
 import java.util.Optional;
+import java.util.List;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -85,5 +87,28 @@ public class TableServiceTest {
 		assertThat(testCase2.isPresent()).isFalse();
 		assertThat(testCase3.isPresent()).isFalse();
 		assertThat(testCase4.isPresent()).isFalse();
+	}
+
+	@Test
+	public void givenASearchStringwhenMatchesFoundThenReturnCountandCoordinates()
+		throws IOException, FileNotFoundException {
+
+		Optional<String> resourcePath = Utility.getResourcePath("mock_table.txt");
+		TableService tableService = new TableServiceImpl(resourcePath.get());
+
+		List<TableSearch> tableSearches = tableService.search("ee");
+
+		TableSearch testCase1 = tableSearches.get(0);
+		TableSearch testCase2 = tableSearches.get(1);
+
+		assertThat(testCase1.getRow()).isEqualTo(0);
+		assertThat(testCase1.getCol()).isEqualTo(4);
+		assertThat(testCase1.isLeftPart()).isTrue();
+		assertThat(testCase1.getMatchCount()).isEqualTo(2);
+
+		assertThat(testCase2.getRow()).isEqualTo(4);
+		assertThat(testCase2.getCol()).isEqualTo(2);
+		assertThat(testCase2.isLeftPart()).isFalse();
+		assertThat(testCase2.getMatchCount()).isEqualTo(2);		
 	}
 }

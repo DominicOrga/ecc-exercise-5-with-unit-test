@@ -1,7 +1,9 @@
 package com.ecc.service;
 
 import java.util.Optional;
+import java.util.List;
 import com.ecc.model.TableCell;
+import com.ecc.model.TableSearch;
 
 public interface TableService {
 	char TABLE_DELIMITER = '/';
@@ -12,4 +14,5 @@ public interface TableService {
 	int getRowCount();
 	int getColCount();
 	String getTableAsString();
+	List<TableSearch> search(String searchString);
 }
