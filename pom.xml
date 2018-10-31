@@ -22,6 +22,7 @@
     <module>service</module>
     <module>util</module>
     <module>model</module>
+    <module>app</module>
   </modules>
 
   <dependencies>
