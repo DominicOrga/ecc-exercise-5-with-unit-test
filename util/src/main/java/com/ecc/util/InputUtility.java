@@ -22,4 +22,27 @@ public class InputUtility {
 
 		return Optional.of(input);
 	}
+
+	public static Optional<Integer> nextInt(String message) {
+		return nextInt(message, Integer.MIN_VALUE, Integer.MAX_VALUE);
+	}
+
+	public static Optional<Integer> nextInt(String message, int min, int max) {
+		Scanner scanner = new Scanner(System.in);
+		boolean isInputValidated = false;
+		int intInput = 0;
+
+		System.out.print(message + " ");
+		String input = scanner.nextLine();
+		
+		if (input.matches("-?\\d+")) {
+			intInput = Integer.parseInt(input);
+
+			if (intInput >= min && intInput <= max) {
+				return Optional.of(intInput);
+			}
+		}	
+
+		return Optional.empty();
+	}	
 }

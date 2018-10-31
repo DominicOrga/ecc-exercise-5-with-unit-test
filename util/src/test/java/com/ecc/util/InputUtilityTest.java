@@ -12,17 +12,19 @@ import java.io.ByteArrayInputStream;
 public class InputUtilityTest {
 
 	@Test
-	public void givenAValidStringWhenRequestStringThenReturnString() {
-		ByteArrayInputStream in = new ByteArrayInputStream("My Input String".getBytes());
+	public void givenAValidStringInputWhenRequestStringThenReturnString() {
+		String stringInput = "My Input String";
+
+		ByteArrayInputStream in = new ByteArrayInputStream(stringInput.getBytes());
 		System.setIn(in);
 
 		Optional<String> str = InputUtility.nextString("message");
 	
-		assertThat(str.get()).isEqualTo("My Input String");
+		assertThat(str.get()).isEqualTo(stringInput);
 	}
 
 	@Test
-	public void givenAnInvalidSubstringWhenRequestStringThenReturnEmpty() {
+	public void givenAnInvalidStringInputWhenRequestStringThenReturnEmpty() {
 		String stringInput = "My Input String";
 		String[] invalidSubstring = { "Input" };
 
@@ -34,7 +36,23 @@ public class InputUtilityTest {
 		assertThat(str.isPresent()).isFalse();
 	}
 
+	@Test
+	public void givenAValidIntegerInputWhenRequestIntegerThenReturnInteger() {
+		String intInput = "4";
 
+		ByteArrayInputStream in = new ByteArrayInputStream(intInput.getBytes());
+		System.setIn(in);
+
+		Optional<Integer> input = InputUtility.nextInt("message");
+
+		assertThat(input.get()).isEqualTo(Integer.parseInt(intInput));
+	}
+
+	@Test
+	@Ignore
+	public void givenMaxIsLessThatMinWhenRequestIntegerThenReturnEmpty() {
+
+	}
 
 	@After
 	public void resetSystemIn() {

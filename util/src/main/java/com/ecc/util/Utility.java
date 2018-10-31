@@ -33,7 +33,6 @@ public class Utility {
 		int count = 0;
 		int s = str.length() - substr.length();
 
-		// substr length is longer than the string to be searched. Hence, return 0.
 		if (s < 0) {
 			return count;
 		}
