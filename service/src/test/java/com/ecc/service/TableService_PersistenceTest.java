@@ -116,7 +116,7 @@ public class TableService_PersistenceTest {
 	}
 
 	@Test
-	public void sortRowCellsAscending() 
+	public void sortRowAscending() 
 		throws IOException, FileNotFoundException {
 
 		this.tableService.sortRow(0, true);
@@ -134,8 +134,9 @@ public class TableService_PersistenceTest {
 	}
 
 	@Test
-	public void sortRowCellsDescending() 
+	public void sortRowDescending() 
 		throws IOException, FileNotFoundException {
+
 		this.tableService.sortRow(0, false);
 
 		this.tableService = new TableServiceImpl(this.resourcePath.get());
@@ -148,6 +149,24 @@ public class TableService_PersistenceTest {
 		assertThat(col1.get().toString(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)).isEqualTo("bb,bb");
 		assertThat(col2.get().toString(TableService.CELL_DELIMITER + Utility.EMPTY_STRING)).isEqualTo("a,a");
 		assertThat(col3.isPresent()).isFalse();				
+	}
+
+	@Test
+	public void whenResetTableThenResetTableWithRandomValues() 
+		throws IOException, FileNotFoundException {
+
+		this.tableService.resetTable(2, 2);
+
+		this.tableService = new TableServiceImpl(this.resourcePath.get());
+		Optional<TableCell> cell00 = this.tableService.getCell(0, 0);
+		Optional<TableCell> cell01 = this.tableService.getCell(0, 1);
+		Optional<TableCell> cell10 = this.tableService.getCell(1, 0); 
+		Optional<TableCell> cell11 = this.tableService.getCell(1, 1); 
+
+		assertThat(cell00.isPresent()).isTrue();
+		assertThat(cell01.isPresent()).isTrue();
+		assertThat(cell10.isPresent()).isTrue();
+		assertThat(cell11.isPresent()).isTrue();
 	}
 
 	@After

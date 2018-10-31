@@ -20,6 +20,7 @@ import java.util.Random;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.function.Supplier;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -183,6 +184,22 @@ public class TableServiceImpl implements TableService {
        	persistTable();
 	}
 	
+	public void resetTable(int rowCount, int colCount) {
+		Supplier<List<Optional<TableCell>>> rowCellSupplier = 
+		() -> {
+			return Stream.generate(() -> 
+						     Optional.of(new TableCell(generateRandomString(), generateRandomString())))
+						 .limit(colCount)
+						 .collect(Collectors.toList());
+		};
+
+		this.rowCells = Stream.generate(rowCellSupplier)
+							  .limit(rowCount)
+							  .collect(Collectors.toList());
+
+		persistTable();
+	}
+
 	private void persistTable() {
 		try (FileWriter writer = new FileWriter(this.tableFile)) {
 			String tableString = 

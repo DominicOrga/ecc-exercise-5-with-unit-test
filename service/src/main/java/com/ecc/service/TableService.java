@@ -20,4 +20,5 @@ public interface TableService {
 	void addCell(int row, int col, String leftString, String rightString);
 	void addRow();
 	void sortRow(int row, boolean isAscending);
+	void resetTable(int rowCount, int colCount);
 }
