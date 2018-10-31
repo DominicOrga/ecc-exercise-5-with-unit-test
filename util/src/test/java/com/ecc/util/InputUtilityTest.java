@@ -49,8 +49,22 @@ public class InputUtilityTest {
 	}
 
 	@Test
-	@Ignore
 	public void givenMaxIsLessThatMinWhenRequestIntegerThenReturnEmpty() {
+		String intInput = "4";
+		int min = 6;
+		int max = 4;
+
+		ByteArrayInputStream in = new ByteArrayInputStream(intInput.getBytes());
+		System.setIn(in);
+
+		Optional<Integer> input = InputUtility.nextInt("message", min, max);
+
+		assertThat(input.isPresent()).isFalse();	
+	}
+
+	@Test
+	@Ignore
+	public void givenANonIntegerInputWhenRequestIntegerThenReturnEmpty() {
 
 	}
 
