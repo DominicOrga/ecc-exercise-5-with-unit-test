@@ -74,6 +74,31 @@ public class InputUtilityTest {
 		assertThat(input.isPresent()).isFalse();		
 	}
 
+	@Test
+	public void givenTrueSymbolWhenRequestBoolThenReturnTrue() {
+		String trueSymbol = "y";
+		String falseSymbol = "n";
+
+		ByteArrayInputStream in = new ByteArrayInputStream(trueSymbol.getBytes());
+		System.setIn(in);
+
+		Optional<Boolean> input = InputUtility.nextBool("message", trueSymbol, falseSymbol);
+
+		assertThat(input.get()).isTrue();
+	}
+
+	@Test
+	@Ignore
+	public void givenFalseSymbolWhenRequestBoolThenReturnFalse() {
+
+	}
+
+	@Test
+	@Ignore
+	public void givenInvalidSymbolWhenRequestBoolThenReturnEmpty() {
+
+	}
+
 	@After
 	public void resetSystemIn() {
 		System.setIn(System.in);

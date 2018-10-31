@@ -29,14 +29,12 @@ public class InputUtility {
 
 	public static Optional<Integer> nextInt(String message, int min, int max) {
 		Scanner scanner = new Scanner(System.in);
-		boolean isInputValidated = false;
-		int intInput = 0;
 
 		System.out.print(message + " ");
 		String input = scanner.nextLine();
 		
 		if (input.matches("-?\\d+")) {
-			intInput = Integer.parseInt(input);
+			int intInput = Integer.parseInt(input);
 
 			if (intInput >= min && intInput <= max) {
 				return Optional.of(intInput);
@@ -45,4 +43,21 @@ public class InputUtility {
 
 		return Optional.empty();
 	}	
+
+	public static Optional<Boolean> nextBool(String message, String trueSymbol, String falseSymbol) {
+		Scanner scanner = new Scanner(System.in);
+
+		System.out.print(message + " ");
+		String input = scanner.nextLine();
+
+		if (input.equals(trueSymbol)) {
+			return Optional.of(true);
+		}		
+		else if (input.equals(falseSymbol)) {
+			return Optional.of(false);
+		}
+		else {
+			return Optional.empty();
+		}
+	}
 }
