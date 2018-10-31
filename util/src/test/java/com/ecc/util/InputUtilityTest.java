@@ -49,7 +49,7 @@ public class InputUtilityTest {
 	}
 
 	@Test
-	public void givenMaxIsLessThatMinWhenRequestIntegerThenReturnEmpty() {
+	public void givenMaxIsLessThanMinWhenRequestIntegerThenReturnEmpty() {
 		String intInput = "4";
 		int min = 6;
 		int max = 4;
@@ -63,9 +63,15 @@ public class InputUtilityTest {
 	}
 
 	@Test
-	@Ignore
 	public void givenANonIntegerInputWhenRequestIntegerThenReturnEmpty() {
+		String intInput = "Non-String Input";
 
+		ByteArrayInputStream in = new ByteArrayInputStream(intInput.getBytes());
+		System.setIn(in);
+
+		Optional<Integer> input = InputUtility.nextInt("message");
+
+		assertThat(input.isPresent()).isFalse();		
 	}
 
 	@After
