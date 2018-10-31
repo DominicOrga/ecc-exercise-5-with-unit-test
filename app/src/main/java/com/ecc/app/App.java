@@ -122,10 +122,9 @@ public class App {
 					tableService.editCell(row, col, isLeftPart, str);
 					break;
 
-				// case OPTION_ADD_ROW:
-				// 	tableService.addRow();
-				// 	tableService.displayTable();
-				// 	break;
+				case OPTION_ADD_ROW:
+					tableService.addRow();
+					break;
 
 				// case OPTION_ADD_CELL: 
 				// 	isValidated = false;
