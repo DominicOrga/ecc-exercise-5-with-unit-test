@@ -73,6 +73,10 @@ public class App {
 			int option = InputUtility.nextIntPersistent("Enter Option:", 0, 7);
 			int row, col;
 			boolean isValidated;
+			String[] invalidSubstrings = { 
+				TableService.CELL_DELIMITER + Utility.EMPTY_STRING, 
+				TableService.TABLE_DELIMITER + Utility.EMPTY_STRING 
+			};
 
 			switch (option) {
 				case OPTION_SEARCH:
@@ -109,12 +113,7 @@ public class App {
 					} while (!isValidated);
 					
 					boolean isLeftPart = 
-						InputUtility.nextBoolPersistent("[0] Right Part, [1] Left Part:", "1", "0");
-
-					String[] invalidSubstrings = { 
-						TableService.CELL_DELIMITER + Utility.EMPTY_STRING, 
-						TableService.TABLE_DELIMITER + Utility.EMPTY_STRING 
-					};
+						InputUtility.nextBoolPersistent("[0] Right Part, [1] Left Part:", "1", "0");					
 
 					String str = InputUtility.nextStringPersistent(
 						"Enter New String:", invalidSubstrings);
@@ -126,30 +125,29 @@ public class App {
 					tableService.addRow();
 					break;
 
-				// case OPTION_ADD_CELL: 
-				// 	isValidated = false;
+				case OPTION_ADD_CELL: 
+					isValidated = false;
 
-				// 	do {
-				// 		row = Utility.getIntegerInput("Enter Row:", 0, tableService.getRowCount() - 1);
-				// 		col = Utility.getIntegerInput("Enter Column:", 0, tableService.getColumnCount() - 1);
+					do {
+						row = InputUtility.nextIntPersistent("Enter Row:", 0, tableService.getRowCount() - 1);
+						col = InputUtility.nextIntPersistent("Enter Column:", 0, tableService.getColCount() - 1);
 
-				// 		if (tableService.isCellNull(row, col)) {
-				// 			isValidated = true;
-				// 		}
-				// 		else {
-				// 			System.out.println("The chosen cell must be a null cell.");
-				// 		}
+						if (tableService.isCellNull(row, col)) {
+							isValidated = true;
+						}
+						else {
+							System.out.println("The chosen cell must be a null cell.");
+						}
 
-				// 	} while (!isValidated);
+					} while (!isValidated);
 
-				// 	String leftStr = Utility.getStringInput(
-				// 		"Enter Left String:", TableService.INNER_CELL_DELIMITER + Utility.EMPTY_STRING);
-				// 	String rightStr = Utility.getStringInput(
-				// 		"Enter Right String:", TableService.INNER_CELL_DELIMITER + Utility.EMPTY_STRING);
+					String leftStr = InputUtility.nextStringPersistent(
+						"Enter Left String:", invalidSubstrings);
+					String rightStr = InputUtility.nextStringPersistent(
+						"Enter Right String:", invalidSubstrings);
 
-				// 	tableService.addCell(row, col, leftStr, rightStr);
-				// 	tableService.displayTable();
-				// 	break;
+					tableService.addCell(row, col, leftStr, rightStr);
+					break;
 
 				// case OPTION_DISPLAY:
 				// 	tableService.displayTable();
