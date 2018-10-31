@@ -88,15 +88,29 @@ public class InputUtilityTest {
 	}
 
 	@Test
-	@Ignore
 	public void givenFalseSymbolWhenRequestBoolThenReturnFalse() {
+		String trueSymbol = "y";
+		String falseSymbol = "n";
 
+		ByteArrayInputStream in = new ByteArrayInputStream(falseSymbol.getBytes());
+		System.setIn(in);
+
+		Optional<Boolean> input = InputUtility.nextBool("message", trueSymbol, falseSymbol);
+
+		assertThat(input.get()).isFalse();	
 	}
 
 	@Test
-	@Ignore
 	public void givenInvalidSymbolWhenRequestBoolThenReturnEmpty() {
+		String trueSymbol = "y";
+		String falseSymbol = "n";
 
+		ByteArrayInputStream in = new ByteArrayInputStream("a".getBytes());
+		System.setIn(in);
+
+		Optional<Boolean> input = InputUtility.nextBool("message", trueSymbol, falseSymbol);
+
+		assertThat(input.isPresent()).isFalse();
 	}
 
 	@After
