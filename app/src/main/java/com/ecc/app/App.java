@@ -66,7 +66,7 @@ public class App {
 		boolean isExit = false;
 
 		do {
-			System.out.println(tableService.getTableAsString() + "\n\n");
+			System.out.println("\n" + tableService.getTableAsString() + "\n\n");
 
 			System.out.println("[0] Search, [1] Edit Cell, [2] Add Row, [3] Add Cell, [4] Display, " + 
 				"[5] Sort, [6] Reset, [7] Exit");
@@ -92,31 +92,35 @@ public class App {
 					System.out.println();
 					break;
 
-				// case OPTION_EDIT: 
-				// 	isValidated = false;
+				case OPTION_EDIT: 
+					isValidated = false;
 
-				// 	do {
-				// 		row = InputUtility.nextIntPersistent("Enter Row:", 0, tableService.getRowCount() - 1);
-				// 		col = InputUtility.nextIntPersistent("Enter Column:", 0, tableService.getColumnCount() - 1);
+					do {
+						row = InputUtility.nextIntPersistent("Enter Row:", 0, tableService.getRowCount() - 1);
+						col = InputUtility.nextIntPersistent("Enter Column:", 0, tableService.getColCount() - 1);
 
-				// 		if (tableService.isCellNull(row, col) || 
-				// 			tableService.isCellCoordinateOutOfBounds(row, col)) {
-				// 			System.out.println("The chosen cell must not be a null cell.");
-				// 		}
-				// 		else {
-				// 			isValidated = true;
-				// 		}
-				// 	} while (!isValidated);
+						if (tableService.isCellNull(row, col) || 
+							tableService.isCellOutOfBounds(row, col)) {
+							System.out.println("The chosen cell must not be a null cell.");
+						}
+						else {
+							isValidated = true;
+						}
+					} while (!isValidated);
 					
-				// 	boolean isRightPart = 
-				// 		Utility.getBooleanInput("[0] Left Part, [1] Right Part:", '1', '0');
+					boolean isLeftPart = 
+						InputUtility.nextBoolPersistent("[0] Right Part, [1] Left Part:", "1", "0");
 
-				// 	String str = Utility.getStringInput(
-				// 		"Enter New String:", TableService.INNER_CELL_DELIMITER + Utility.EMPTY_STRING);
+					String[] invalidSubstrings = { 
+						TableService.CELL_DELIMITER + Utility.EMPTY_STRING, 
+						TableService.TABLE_DELIMITER + Utility.EMPTY_STRING 
+					};
 
-				// 	tableService.editCell(row, col, isRightPart, str);
-				// 	tableService.displayTable();
-				// 	break;
+					String str = InputUtility.nextStringPersistent(
+						"Enter New String:", invalidSubstrings);
+
+					tableService.editCell(row, col, isLeftPart, str);
+					break;
 
 				// case OPTION_ADD_ROW:
 				// 	tableService.addRow();
