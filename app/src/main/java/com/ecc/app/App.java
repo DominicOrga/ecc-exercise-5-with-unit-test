@@ -149,20 +149,18 @@ public class App {
 					tableService.addCell(row, col, leftStr, rightStr);
 					break;
 
-				// case OPTION_DISPLAY:
-				// 	tableService.displayTable();
-				// 	break;
+				case OPTION_DISPLAY:
+					break;
 
-				// case OPTION_SORT: 
-				// 	row = 
-				// 		Utility.getIntegerInput("Enter Row to Sort:", 0, tableService.getRowCount() - 1);
+				case OPTION_SORT: 
+					row = 
+						InputUtility.nextIntPersistent("Enter Row to Sort:", 0, tableService.getRowCount() - 1);
 
-				// 	boolean isAscending = 
-				// 		Utility.getBooleanInput("[0] Descending, [1] Ascending:", '1', '0');
+					boolean isAscending = 
+						InputUtility.nextIntPersistent("[0] Descending, [1] Ascending:", 0, 1) == 1;
 
-				// 	tableService.sortRow(row, isAscending);
-				// 	tableService.displayTable();
-				// 	break;
+					tableService.sortRow(row, isAscending);
+					break;
 
 				// case OPTION_RESET:
 				// 	row = Utility.getIntegerInput("Enter Desired Number of Rows:", 0, 5000);
