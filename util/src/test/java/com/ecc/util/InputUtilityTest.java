@@ -22,9 +22,19 @@ public class InputUtilityTest {
 	}
 
 	@Test
-	@Ignore
-	public void givenAnInvalidSubstringWhenRequestStringThenReturnNothingAndDisplayError() {
+	public void givenAnInvalidSubstringWhenRequestStringThenReturnEmpty() {
+		String stringInput = "My Input String";
+		String[] invalidSubstring = { "Input" };
+
+		ByteArrayInputStream in = new ByteArrayInputStream(stringInput.getBytes());
+		System.setIn(in);
+
+		Optional<String> str = InputUtility.nextString("message", invalidSubstring);
+
+		assertThat(str.isPresent()).isFalse();
 	}
+
+
 
 	@After
 	public void resetSystemIn() {

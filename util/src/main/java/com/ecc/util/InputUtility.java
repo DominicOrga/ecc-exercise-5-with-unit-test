@@ -15,8 +15,7 @@ public class InputUtility {
 		if (invalidSubstrings != null) {
 			for (int i = 0, s = invalidSubstrings.length; i < s; i++) {
 				if (input.contains(invalidSubstrings[i])) {
-					System.out.printf("Input contains invalid substring: %s\n", invalidSubstrings[i]);
-					return  Optional.empty();
+					return Optional.empty();
 				};
 			}
 		}
