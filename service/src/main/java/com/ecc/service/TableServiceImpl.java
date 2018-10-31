@@ -14,9 +14,12 @@ import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Comparator;
 import java.util.Random;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -131,6 +134,16 @@ public class TableServiceImpl implements TableService {
 		persistTable();
 	}
 
+	public void addCell(int row, int col, String leftString, String rightString) {
+		if (isCellOutOfBounds(row, col) || !isCellNull(row, col)) {
+			return;
+		}
+
+		this.rowCells.get(row).set(col, Optional.of(new TableCell(leftString, rightString)));
+
+		persistTable();
+	}
+
 	public void addRow() {
 		List<Optional<TableCell>> columnCells = new ArrayList<>();
 
@@ -145,16 +158,31 @@ public class TableServiceImpl implements TableService {
 		persistTable();
 	}
 
-	public void addCell(int row, int col, String leftString, String rightString) {
-		if (isCellOutOfBounds(row, col) || !isCellNull(row, col)) {
+	public void sortRow(int row, boolean isAscending) {
+		if (row >= getRowCount() || row < 0) {
 			return;
 		}
 
-		this.rowCells.get(row).set(col, Optional.of(new TableCell(leftString, rightString)));
+		Map<Boolean, List<Optional<TableCell>>> presentCells = 
+			this.rowCells.get(row).stream().collect(Collectors.partitioningBy(Optional::isPresent));
 
-		persistTable();
+		List<Optional<TableCell>> sortedPresentCells = 
+			presentCells.get(true)
+			            .stream()
+			            .map(Optional::get)
+			            .sorted(isAscending ? Comparator.naturalOrder() : Comparator.reverseOrder())
+	                    .map(innerCell -> Optional.ofNullable(innerCell))
+	                    .collect(Collectors.toList());
+   
+       	this.rowCells.set(
+       		row, 
+       		Stream.concat(sortedPresentCells.stream(), presentCells.get(false).stream())
+       		      .collect(Collectors.toList())
+   		);
+
+       	persistTable();
 	}
-
+	
 	private void persistTable() {
 		try (FileWriter writer = new FileWriter(this.tableFile)) {
 			String tableString = 
