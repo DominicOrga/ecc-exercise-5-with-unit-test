@@ -26,7 +26,7 @@ public class App {
 
 		try {
 			boolean isDefaultFile = 
-				InputUtility.nextBoolPersistent("Table File [0] Choose File, [1] Use Default:", "1", "0");
+				InputUtility.nextIntPersistent("Table File [0] Choose File, [1] Use Default:", 0, 1) == 1;
 
 			if (!isDefaultFile) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -113,7 +113,7 @@ public class App {
 					} while (!isValidated);
 					
 					boolean isLeftPart = 
-						InputUtility.nextBoolPersistent("[0] Right Part, [1] Left Part:", "1", "0");					
+						InputUtility.nextIntPersistent("[0] Right Part, [1] Left Part:", 0, 1) == 1;					
 
 					String str = InputUtility.nextStringPersistent(
 						"Enter New String:", invalidSubstrings);
