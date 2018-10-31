@@ -162,13 +162,12 @@ public class App {
 					tableService.sortRow(row, isAscending);
 					break;
 
-				// case OPTION_RESET:
-				// 	row = Utility.getIntegerInput("Enter Desired Number of Rows:", 0, 5000);
-				// 	col = Utility.getIntegerInput("Enter Desired Number of Columns:", 0, 5000);
+				case OPTION_RESET:
+					row = InputUtility.nextIntPersistent("Enter Desired Number of Rows:", 1, 5000);
+					col = InputUtility.nextIntPersistent("Enter Desired Number of Columns:", 1, 5000);
 
-				// 	tableService.resetTable(row, col);
-				// 	tableService.displayTable();
-				// 	break;
+					tableService.resetTable(row, col);
+					break;
 
 				case OPTION_EXIT:
 					isExit = true;

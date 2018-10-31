@@ -169,6 +169,16 @@ public class TableService_PersistenceTest {
 		assertThat(cell11.isPresent()).isTrue();
 	}
 
+	@Test
+	public void givenLessThanOneRowOrColWhenResetTableThenDoNothing() 
+		throws IOException, FileNotFoundException {
+		
+		this.tableService.resetTable(0, 0);
+
+		assertThat(tableService.getRowCount()).isEqualTo(3);
+		assertThat(tableService.getColCount()).isEqualTo(4);
+	}
+
 	@After
 	public void RestoreTable() throws IOException {
 		FileUtils.writeStringToFile(new File(this.resourcePath.get()), fileCache);		

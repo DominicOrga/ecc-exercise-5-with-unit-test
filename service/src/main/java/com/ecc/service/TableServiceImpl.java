@@ -185,6 +185,10 @@ public class TableServiceImpl implements TableService {
 	}
 	
 	public void resetTable(int rowCount, int colCount) {
+		if (rowCount <= 0 || colCount <= 0) {
+			return;
+		}
+
 		Supplier<List<Optional<TableCell>>> rowCellSupplier = 
 		() -> {
 			return Stream.generate(() -> 
