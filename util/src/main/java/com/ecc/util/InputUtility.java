@@ -11,6 +11,8 @@ public class InputUtility {
 		do {
 			input = nextString(message, invalidSubstrings);
 		} while (!input.isPresent());
+
+		return input.get();
 	}
 
 	public static Optional<String> nextString(String message, String... invalidSubstrings) {
@@ -30,6 +32,26 @@ public class InputUtility {
 		}
 
 		return Optional.of(input);
+	}
+
+	public static int nextIntPersistent(String message) {
+		Optional<Integer> input;
+
+		do {
+			input = nextInt(message);
+		} while (!input.isPresent());
+
+		return input.get().intValue();
+	}
+
+	public static int nextIntPersistent(String message, int min, int max) {
+		Optional<Integer> input;
+
+		do {
+			input = nextInt(message, min, max);
+		} while (!input.isPresent());
+
+		return input.get().intValue();
 	}
 
 	public static Optional<Integer> nextInt(String message) {
@@ -59,6 +81,16 @@ public class InputUtility {
 
 		return Optional.empty();
 	}	
+
+	public static boolean nextBoolPersistent(String message, String trueSymbol, String falseSymbol) {
+		Optional<Boolean> input;
+
+		do {
+			input = nextBool(message, trueSymbol, falseSymbol);
+		} while (!input.isPresent());
+
+		return input.get().booleanValue();
+	}
 
 	public static Optional<Boolean> nextBool(String message, String trueSymbol, String falseSymbol) {
 		Scanner scanner = new Scanner(System.in);
