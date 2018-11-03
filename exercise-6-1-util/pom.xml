@@ -7,22 +7,9 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.ecc.app</groupId>
-  <artifactId>app</artifactId>
+  <groupId>com.ecc.util</groupId>
+  <artifactId>exercise-6-1-util</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>app</name>
- 
-  <dependencies>
-    <dependency>
-      <groupId>com.ecc.service</groupId>
-      <artifactId>service</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.ecc.util</groupId>
-      <artifactId>util</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-  </dependencies>
+  <name>exercise-6-1-util</name>
 </project>

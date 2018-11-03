@@ -19,10 +19,10 @@
   </properties>
 
   <modules>
-    <module>service</module>
-    <module>util</module>
-    <module>model</module>
-    <module>app</module>
+    <module>exercise-6-1-service</module>
+    <module>exercise-6-1-util</module>
+    <module>exercise-6-1-model</module>
+    <module>exercise-6-1-app</module>
   </modules>
 
   <dependencies>
